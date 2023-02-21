@@ -28,7 +28,7 @@ typedef std::pair<weight_t, vertex_t> weight_vertex_pair_t;
                             std::vector<vertex_t> &previous
                         )
     与えられた隣接リストについてダイクストラ法で最短経路を計算する
-    source: ゴールのノード, adjacency_list: 最短経路の前の点を記録する, min_distance: 現在の最小の距離, previous: 前回通ったノード
+    source: ゴールのノード, adjacency_list: 最短経路の前の点を記録する, min_distance: 最小の距離, previous: 前回通ったノード
 */
 void DijkstraComputePaths(  vertex_t source,
                             const adjacency_list_t &adjacency_list,
@@ -89,71 +89,31 @@ int main() {
         int start: スタートするノード
         int goal: ゴールするノード
     */
-    int node_num = 11;
+    int node_num = 3;
     int start = 0;
-    int goal = 5;
+    int goal = 1;
 
     // 無向グラフ 両方の方法を挿入する
     adjacency_list_t adjacency_list(node_num);
 
     adjacency_list[0].push_back(neighbor(1, 2));  //0->1の辺は重み2
     adjacency_list[0].push_back(neighbor(2, 3));
-    adjacency_list[0].push_back(neighbor(3, 6));
 
     adjacency_list[1].push_back(neighbor(0, 2));
-    adjacency_list[1].push_back(neighbor(4, 4));
-    adjacency_list[1].push_back(neighbor(5, 1));
-    adjacency_list[1].push_back(neighbor(8, 10));
 
     adjacency_list[2].push_back(neighbor(0, 3));
-    adjacency_list[2].push_back(neighbor(3, 2));
-    adjacency_list[2].push_back(neighbor(5, 2));
 
-    adjacency_list[3].push_back(neighbor(0, 6));
-    adjacency_list[3].push_back(neighbor(2, 2));
-    adjacency_list[3].push_back(neighbor(5, 1));
-    adjacency_list[3].push_back(neighbor(6, 2));
-    adjacency_list[3].push_back(neighbor(8, 4));
 
-    adjacency_list[4].push_back(neighbor(1, 4));
-    adjacency_list[4].push_back(neighbor(8, 2));
-    adjacency_list[4].push_back(neighbor(9, 1));
-    adjacency_list[4].push_back(neighbor(10, 8));
-
-    adjacency_list[5].push_back(neighbor(1, 1));
-    adjacency_list[5].push_back(neighbor(2, 2));
-    adjacency_list[5].push_back(neighbor(3, 1));
-    adjacency_list[5].push_back(neighbor(7, 7));
-    adjacency_list[5].push_back(neighbor(9, 3));
-
-    adjacency_list[6].push_back(neighbor(3, 2));
-    adjacency_list[6].push_back(neighbor(8, 4));
-    adjacency_list[6].push_back(neighbor(10, 3));
-
-    adjacency_list[7].push_back(neighbor(5, 7));
-    adjacency_list[7].push_back(neighbor(8, 3));
-    adjacency_list[7].push_back(neighbor(10, 5));
-
-    adjacency_list[8].push_back(neighbor(3, 4));
-    adjacency_list[8].push_back(neighbor(4, 2));
-    adjacency_list[8].push_back(neighbor(6, 4));
-    adjacency_list[8].push_back(neighbor(7, 3));
-    adjacency_list[8].push_back(neighbor(10, 11));
-
-    adjacency_list[9].push_back(neighbor(4, 1));
-    adjacency_list[9].push_back(neighbor(5, 3));
-
-    adjacency_list[10].push_back(neighbor(4, 8));
-    adjacency_list[10].push_back(neighbor(6, 3));
-    adjacency_list[10].push_back(neighbor(7, 5));
-    adjacency_list[10].push_back(neighbor(8, 11));
-    adjacency_list[10].push_back(neighbor(9, 7));
-
-    std::vector<weight_t> min_distance;
-    std::vector<vertex_t> previous;
+    std::vector<weight_t> min_distance; // min_distance: 最小の距離
+    std::vector<vertex_t> previous; // previous: 前回通過したノード
     DijkstraComputePaths(start, adjacency_list, min_distance, previous);
+
+    // 最短距離を出力
     std::cout << "Distance from " << start <<  " to " << goal << ": " << min_distance[goal] << std::endl;
-    std::list<vertex_t> path = DijkstraGetShortestPathTo(goal, previous);
+
+    std::list<vertex_t> path = DijkstraGetShortestPathTo(goal, previous); // list: 最短経路を格納する変数
+
+    // 復元した経路を出力
     std::cout << "Path: ";
     std::copy(path.begin(), path.end(), std::ostream_iterator<vertex_t>(std::cout, " "));
     std::cout << std::endl;

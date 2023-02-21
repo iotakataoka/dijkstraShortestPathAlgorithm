@@ -1,6 +1,6 @@
 # dijkstraShortestPathAlgorithm
 
-##
+## ex
 ``` c++
     adjacency_list[0].push_back(neighbor(1, 2));
     adjacency_list[0].push_back(neighbor(2, 3));
