@@ -1,26 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <list>
-#include <queue>
-#include <utility> // for pair
-#include <algorithm>
-#include <iterator>
-
-typedef int vertex_t;
-typedef double weight_t;
-
-const weight_t max_weight = 0x3f3f3f3f;
-
-struct neighbor {
-    vertex_t target;
-    weight_t weight;
-    neighbor( vertex_t arg_target, weight_t arg_weight )
-            : target(arg_target), weight(arg_weight) { }
-};
-
-typedef std::vector<std::vector<neighbor> > adjacency_list_t;
-typedef std::pair<weight_t, vertex_t> weight_vertex_pair_t;
+#include "makeAdjList.hpp"
 
 /* DijkstraComputePaths(    vertex_t source,
                             const adjacency_list_t &adjacency_list,
@@ -85,28 +63,15 @@ std::list<vertex_t> DijkstraGetShortestPathTo(vertex_t vertex, const std::vector
 
 int main() {
     /*
-        int node_num: ノードの総数
         int start: スタートするノード
         int goal: ゴールするノード
     */
-    int node_num = 3;
     int start = 0;
-    int goal = 1;
-
-    // 無向グラフ 両方の方法を挿入する
-    adjacency_list_t adjacency_list(node_num);
-
-    adjacency_list[0].push_back(neighbor(1, 2));  //0->1の辺は重み2
-    adjacency_list[0].push_back(neighbor(2, 3));
-
-    adjacency_list[1].push_back(neighbor(0, 2));
-
-    adjacency_list[2].push_back(neighbor(0, 3));
-
+    int goal = 9;
 
     std::vector<weight_t> min_distance; // min_distance: 最小の距離
     std::vector<vertex_t> previous; // previous: 前回通過したノード
-    DijkstraComputePaths(start, adjacency_list, min_distance, previous);
+    DijkstraComputePaths(start, makeAdjList(), min_distance, previous);
 
     // 最短距離を出力
     std::cout << "Distance from " << start <<  " to " << goal << ": " << min_distance[goal] << std::endl;
